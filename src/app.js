@@ -32,6 +32,7 @@ function displayTemperature(response) {
         "src",
         `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
     );
+    iconElement.setAttribute("alt", response.data.weather[0].description);
 }
 let city = "Paris";
 let apiKey = "08e97ecdda5ea0cf3c620c610617c3ee";
