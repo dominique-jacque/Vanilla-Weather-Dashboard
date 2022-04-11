@@ -15,7 +15,6 @@ function formatDate(timestamp) {
 
 
 function displayTemperature(response) {
-    console.log(response.data);
     let temperatureElement = document.querySelector("#current-temperature");
     temperatureElement.innerHTML = Math.round(response.data.main.temp);
     let cityElement = document.querySelector("#city");
@@ -30,7 +29,8 @@ function displayTemperature(response) {
     dateElement.innerHTML = formatDate(response.data.dt * 1000);
 
 }
+let city = "Paris";
 let apiKey = "08e97ecdda5ea0cf3c620c610617c3ee";
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Paris&appid=${apiKey}&units=metric`;
+let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
 axios.get(apiUrl).then(displayTemperature);
