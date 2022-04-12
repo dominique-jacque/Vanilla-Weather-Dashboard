@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Raleway', sans-serif;
 }
 
 .weather-app {
@@ -68,3 +68,6 @@ li:first-letter {
     top: -34px;
 }
 
+.weather-temperature .active{
+    text-decoration: none;
+}
