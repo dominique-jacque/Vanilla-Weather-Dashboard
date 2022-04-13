@@ -62,12 +62,11 @@ li:first-letter {
     font-weight: 400;
 }
 
-.weather-temperature .units {
+.d-flex .weather-temperature .units {
     font-size: 16px;
     position:  relative;
     top: -34px;
 }
-
-.weather-temperature .active{
+.d-flex .weather-temperature .active{
     text-decoration: none;
 }
