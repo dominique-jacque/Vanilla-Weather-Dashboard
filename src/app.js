@@ -40,6 +40,10 @@ forecastHTML = forecastHTML + `</div>`;
     forecastElement.innerHTML = forecastHTML;
 }
 
+function getForecast(coordinates){
+    console.log(coordinates);
+
+}
 
 function displayTemperature(response) {
     celsiusTemp = response.data.main.temp;
@@ -61,7 +65,11 @@ function displayTemperature(response) {
         `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
     );
     iconElement.setAttribute("alt", response.data.weather[0].description);
+
+    getForecast(response.data.coord);
 }
+
+
 
 function search(city) {
 
