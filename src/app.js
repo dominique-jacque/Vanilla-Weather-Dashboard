@@ -34,7 +34,7 @@ function displayForecast(response) {
         forecastHTML + 
     `
     <div class = "col-2">
-        <div class = "weather-forecast-date">${formatForecastDay(forecastDay.dt)}</div>
+        <div class = "weather-forecast-date">${formatForecastDay(forecastDay.dt)}</div>    
         <img
                 src = "http://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png"
                 alt=""
@@ -54,30 +54,29 @@ forecastHTML = forecastHTML + `</div>`;
 
 function getForecast(coordinates){
     console.log(coordinates);
-    let apiKey = "18964e1a368b48cfa68231522221604";
-    let apiUrl = `http://api.weatherapi.com/v1/forecast.json?lat=${coordinates.lat}&lon=${coordinates.lon}key=${apiKey}&q=Paris&days=5`
-    
+    let apiKey = "08e97ecdda5ea0cf3c620c610617c3ee";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(displayForecast);
 }
 
 function displayTemperature(response) {
-    FahrenheitTemp = response.data.current.temp_f;
+    celsiusTemp = response.data.main.temp;
     let temperatureElement = document.querySelector("#current-temperature");
-    temperatureElement.innerHTML = Math.round(fahreneitTemp);
+    temperatureElement.innerHTML = Math.round(celsiusTemp);
     let cityElement = document.querySelector("#city");
-    cityElement.innerHTML = response.data.location.name;
+    cityElement.innerHTML = response.data.name;
     let descriptionElement = document.querySelector("#description");
-    descriptionElement.innerHTML = response.data.current.condition[0].text;
+    descriptionElement.innerHTML = response.data.weather[0].description;
     let humidityElement = document.querySelector("#humidity");
-    humidityElement.innerHTML = response.data.current.humidity;
+    humidityElement.innerHTML = response.data.main.humidity;
     let windElement = document.querySelector("#wind");
-    windElement.innerHTML = Math.round(response.data.current.wind_mph);
+    windElement.innerHTML = Math.round(response.data.wind.speed);
     let dateElement = document.querySelector("#date");
-    dateElement.innerHTML = formatDate(response.data.localtime);
+    dateElement.innerHTML = formatDate(response.data.dt * 1000);
     let iconElement = document.querySelector("#icon");
     iconElement.setAttribute(
         "src",
-        `//cdn.weatherapi.com/weather/64x64/night/113.png`
+        `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
     );
     iconElement.setAttribute("alt", response.data.weather[0].description);
 
@@ -88,8 +87,8 @@ function displayTemperature(response) {
 
 function search(city) {
 
-    let apiKey = "18964e1a368b48cfa68231522221604";
-    let apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=Paris&units=metric`;
+    let apiKey = "08e97ecdda5ea0cf3c620c610617c3ee";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(displayTemperature);
 }
 
@@ -99,10 +98,34 @@ function handleSubmit(event) {
   search(cityInputElement.value);
 }
 
+function displayFahrenheitTemp(event) {
+    event.preventDefault();
+    let temperatureElement = document.querySelector("#current-temperature");
+    
+    celsiusLink.classList.remove("active");
+    fahrenheitLink.classList.add("active");
+    let fahrenheitTemp = (celsiusTemp * 9) / 5 + 32;
+    temperatureElement.innerHTML = Math.round(fahrenheitTemp);
+}
+ function displayCelsiusTemp(event) {
+     event.preventDefault();
+     celsiusLink.classList.add("active");
+    fahrenheitLink.classList.remove("active");
+     let temperatureElement = document.querySelector("#current-temperature");
+     temperatureElement.innerHTML = Math.round(celsiusTemp);
+ }
+
+
+let celsiusTemp = null;
+
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
 
+let fahrenheitLink = document.querySelector("#fahrenheit-link");
+fahrenheitLink.addEventListener("click", displayFahrenheitTemp);
 
+let celsiusLink = document.querySelector("#celsius-link");
+celsiusLink.addEventListener("click", displayCelsiusTemp);
 
 search("Paris");
