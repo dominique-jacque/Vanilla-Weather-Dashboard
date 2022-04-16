@@ -54,8 +54,9 @@ forecastHTML = forecastHTML + `</div>`;
 
 function getForecast(coordinates){
     console.log(coordinates);
-    let apiKey = "08e97ecdda5ea0cf3c620c610617c3ee";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+    let apiKey = "18964e1a368b48cfa68231522221604";
+    let apiUrl = `http://api.weatherapi.com/v1/forecast.json?lat=${coordinates.lat}&lon=${coordinates.lon}key=${apiKey}&q=Paris&days=5`
+    
     axios.get(apiUrl).then(displayForecast);
 }
 
@@ -87,8 +88,8 @@ function displayTemperature(response) {
 
 function search(city) {
 
-    let apiKey = "08e97ecdda5ea0cf3c620c610617c3ee";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    let apiKey = "18964e1a368b48cfa68231522221604";
+    let apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&units=metric`;
     axios.get(apiUrl).then(displayTemperature);
 }
 
