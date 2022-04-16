@@ -13,11 +13,12 @@ function formatDate(timestamp) {
     return `${day} ${hours}:${minutes}`;
 }
 
-function displayForecast () {
+function displayForecast(response) {
+    console.log(response.data.daily);
     let forecastElement = document.querySelector("#forecast");
-
-    let forecastHTML = `<div class = "row">`;
     let days = ["Thu", "Fri", "Sat", "Sun"];
+    let forecastHTML = `<div class = "row">`;
+    
     days.forEach(function (day) {
     forecastHTML = 
         forecastHTML + 
@@ -88,10 +89,11 @@ function handleSubmit(event) {
 
 function displayFahrenheitTemp(event) {
     event.preventDefault();
-    let fahrenheitTemp = (celsiusTemp * 9) / 5 + 32;
+    let temperatureElement = document.querySelector("#current-temperature");
+    
     celsiusLink.classList.remove("active");
     fahrenheitLink.classList.add("active");
-    let temperatureElement = document.querySelector("#current-temperature");
+    let fahrenheitTemp = (celsiusTemp * 9) / 5 + 32;
     temperatureElement.innerHTML = Math.round(fahrenheitTemp);
 }
  function displayCelsiusTemp(event) {
@@ -114,3 +116,5 @@ fahrenheitLink.addEventListener("click", displayFahrenheitTemp);
 
 let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemp);
+
+search("Paris");
