@@ -61,23 +61,23 @@ function getForecast(coordinates){
 }
 
 function displayTemperature(response) {
-    celsiusTemp = response.data.main.temp;
+    FahrenheitTemp = response.data.current.temp_f;
     let temperatureElement = document.querySelector("#current-temperature");
-    temperatureElement.innerHTML = Math.round(celsiusTemp);
+    temperatureElement.innerHTML = Math.round(fahreneitTemp);
     let cityElement = document.querySelector("#city");
-    cityElement.innerHTML = response.data.name;
+    cityElement.innerHTML = response.data.location.name;
     let descriptionElement = document.querySelector("#description");
-    descriptionElement.innerHTML = response.data.weather[0].description;
+    descriptionElement.innerHTML = response.data.current.condition[0].text;
     let humidityElement = document.querySelector("#humidity");
-    humidityElement.innerHTML = response.data.main.humidity;
+    humidityElement.innerHTML = response.data.current.humidity;
     let windElement = document.querySelector("#wind");
-    windElement.innerHTML = Math.round(response.data.wind.speed);
+    windElement.innerHTML = Math.round(response.data.current.wind_mph);
     let dateElement = document.querySelector("#date");
-    dateElement.innerHTML = formatDate(response.data.dt * 1000);
+    dateElement.innerHTML = formatDate(response.data.localtime);
     let iconElement = document.querySelector("#icon");
     iconElement.setAttribute(
         "src",
-        `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+        `//cdn.weatherapi.com/weather/64x64/night/113.png`
     );
     iconElement.setAttribute("alt", response.data.weather[0].description);
 
@@ -89,7 +89,7 @@ function displayTemperature(response) {
 function search(city) {
 
     let apiKey = "18964e1a368b48cfa68231522221604";
-    let apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&units=metric`;
+    let apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=Paris&units=metric`;
     axios.get(apiUrl).then(displayTemperature);
 }
 
