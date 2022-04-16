@@ -35,7 +35,6 @@ function displayForecast(response) {
     `
     <div class = "col-2">
         <div class = "weather-forecast-date">${formatForecastDay(forecastDay.dt)}</div>
-        
         <img
                 src = "http://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png"
                 alt=""
@@ -99,34 +98,10 @@ function handleSubmit(event) {
   search(cityInputElement.value);
 }
 
-function displayFahrenheitTemp(event) {
-    event.preventDefault();
-    let temperatureElement = document.querySelector("#current-temperature");
-    
-    celsiusLink.classList.remove("active");
-    fahrenheitLink.classList.add("active");
-    let fahrenheitTemp = (celsiusTemp * 9) / 5 + 32;
-    temperatureElement.innerHTML = Math.round(fahrenheitTemp);
-}
- function displayCelsiusTemp(event) {
-     event.preventDefault();
-     celsiusLink.classList.add("active");
-    fahrenheitLink.classList.remove("active");
-     let temperatureElement = document.querySelector("#current-temperature");
-     temperatureElement.innerHTML = Math.round(celsiusTemp);
- }
-
-
-let celsiusTemp = null;
-
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
 
-let fahrenheitLink = document.querySelector("#fahrenheit-link");
-fahrenheitLink.addEventListener("click", displayFahrenheitTemp);
 
-let celsiusLink = document.querySelector("#celsius-link");
-celsiusLink.addEventListener("click", displayCelsiusTemp);
 
 search("Paris");
