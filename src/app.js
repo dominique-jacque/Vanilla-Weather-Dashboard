@@ -13,6 +13,15 @@ function formatDate(timestamp) {
     return `${day} ${hours}:${minutes}`;
 }
 
+function formatForecastDay(timestamp) {
+    let date = new Date(timestamp *1000);
+    let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+    let day = days[date.getDay()];
+
+
+    return days[day];
+}
+
 function displayForecast(response) {
     let forecast = response.data.daily;
     let forecastElement = document.querySelector("#forecast");
