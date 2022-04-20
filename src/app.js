@@ -53,17 +53,6 @@ forecastHTML = forecastHTML + `</div>`;
     forecastElement.innerHTML = forecastHTML;
 }
 
-
-
-function getCurrentPosition (event) {
-    event.preventDefault();
-    navigator.geolocation.getCurrentPosition(showPosition);
-}
-
-
-let currentCityButton = document.querySelector("#current-city");
-currentCityButton.addEventListener("click", getCurrentPosition);
-
 function getLocation(position) {
     let lat = position.coords.latitude;
     let long = position.coords.longitude;
@@ -71,6 +60,15 @@ function getLocation(position) {
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(displayTemperature);
 }
+
+function getCurrentPosition (event) {
+    event.preventDefault();
+    navigator.geolocation.getCurrentPosition(getLocation);
+}
+
+let currentCityButton = document.querySelector("#current-city");
+currentCityButton.addEventListener("click", getCurrentPosition);
+
 
 function getForecast(coordinates) {
     console.log(coordinates);
