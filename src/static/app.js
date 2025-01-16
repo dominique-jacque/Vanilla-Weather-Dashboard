@@ -80,7 +80,7 @@ function displayTemperature(response) {
 
 // Function to fetch weather data via the Flask backend
 function search(city) {
-    const apiUrl = `/api/weather?city=${city}`; // Flask backend endpoint
+    const apiUrl = `http://localhost:5000/api/weather?city=${city}`; // Flask backend endpoint
     axios
         .get(apiUrl)
         .then(response => displayTemperature(response.data))

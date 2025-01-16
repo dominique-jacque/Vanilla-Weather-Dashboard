@@ -6,9 +6,11 @@ from datetime import datetime
 from dotenv import load_dotenv
 import random
 import string
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
+# Debugging: Check working directory and loaded environment variables
 print(f"Current working directory: {os.getcwd()}")
-# Load environment variables
 load_dotenv()
 print(f"OPENWEATHER_API_KEY: {os.getenv('OPENWEATHER_API_KEY')}")
 print(f"AWS_BUCKET_BASE_NAME: {os.getenv('AWS_BUCKET_BASE_NAME')}")
@@ -34,7 +36,6 @@ class WeatherDashboard:
         except:
             print(f"Creating bucket {self.bucket_name}...")
             try:
-                # Create the bucket in the default region
                 self.s3_client.create_bucket(Bucket=self.bucket_name)
                 print(f"Successfully created bucket: {self.bucket_name}")
             except Exception as e:
@@ -81,13 +82,36 @@ class WeatherDashboard:
             print(f"Error saving data to S3: {e}")
             return False
 
+# Initialize Flask app
+app = Flask(__name__)
+CORS(app)  # Enable CORS for frontend-backend communication
+
+# API and S3 endpoints
+dashboard = WeatherDashboard()
+dashboard.create_bucket_if_not_exists()
+
+@app.route("/")
+def home():
+    """Health check endpoint."""
+    return "Weather Dashboard Backend is running!"
+
+@app.route("/api/weather", methods=["GET"])
+def fetch_weather_api():
+    """Fetch weather data for a given city and return it as JSON."""
+    city = request.args.get("city")
+    if not city:
+        return jsonify({"error": "City parameter is required"}), 400
+
+    weather_data = dashboard.fetch_weather(city)
+    if not weather_data:
+        return jsonify({"error": "Failed to fetch weather data"}), 500
+
+    # Save to S3
+    dashboard.save_to_s3(weather_data, city)
+    return jsonify(weather_data)
+
 def main():
-    # Initialize the dashboard
-    dashboard = WeatherDashboard()
-
-    # Ensure the S3 bucket exists
-    dashboard.create_bucket_if_not_exists()
-
+    """Standalone script functionality."""
     # List of cities to fetch weather data for
     cities = ["Philadelphia", "Seattle", "New York"]
 
@@ -116,4 +140,4 @@ def main():
             print(f"Failed to fetch weather data for {city}.")
 
 if __name__ == "__main__":
-    main()
+ main()
