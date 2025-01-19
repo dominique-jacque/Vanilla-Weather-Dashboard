@@ -1,6 +1,6 @@
 # 30 Days DevOps Challenge - Weather App
 
-**Project Overview**
+## Project Overview
 
 The Vanilla Weather App is a Flask-based web application that fetches real-time weather data from the OpenWeatherMap API and displays it in an interactive frontend. It also stores weather data for searched cities in an Amazon S3 bucket for future use or analytics.
 
@@ -51,82 +51,81 @@ project/
 
 ### Prerequisites
 
-Python 3.10 or newer
-pip (Python package manager)
-Node.js (for frontend dependency management, if needed)
-AWS account with an S3 bucket
+- Python 3.10 or newer
+- pip (Python package manager)
+- Node.js (for frontend dependency management, if needed)
+- AWS account with an S3 bucket
 
 ### 1. Clone the Repository
-
-git clone https://github.com/yourusername/vanilla-weather-app.git
-cd vanilla-weather-app
+    git clone https://github.com/yourusername/vanilla-weather-app.git
+    cd vanilla-weather-app
 
 ### 2. Create a Virtual Environment
-
-python -m venv venv
-source venv/bin/activate  # On Windows: .\venv\Scripts\activate
+    python -m venv venv
+    source venv/bin/activate  # On Windows: .\venv\Scripts\activate
 
 ### 3. Install Python Dependencies
-
-pip install -r src/requirements.txt
+    pip install -r src/requirements.txt
 
 ### 4. Configure Environment variables
 
-Create a .env file int eh root directory:
-
-OPENWEATHER_API_KEY=your_openweathermap_api_key
-AWS_BUCKET_BASE_NAME=your_s3_bucket_name
-AWS_REGION=your_aws_region
-AWS_ACCESS_KEY_ID=your_aws_access_key_id
-AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
+Create a .env file in the root directory:
+    OPENWEATHER_API_KEY=your_openweathermap_api_key
+    AWS_BUCKET_BASE_NAME=your_s3_bucket_name
+    AWS_REGION=your_aws_region
+    AWS_ACCESS_KEY_ID=your_aws_access_key_id
+    AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
 
 ### 5. Run the Application
 
 **Development Server:**
-
-python src/app.py
+    python src/app.py
 
 Access the app at http://localhost:5000.
 
 **Production Server:**
 
 Using Waitress (for Windows):
-waitress-serve --port=5000 src.app:app
+    waitress-serve --port=5000 src.app:app
 
 Using Gunicorn (for Linux/Mac):
-gunicorn -w 4 -b 0.0.0.0:5000 src.app:app
+    gunicorn -w 4 -b 0.0.0.0:5000 src.app:app
 
 
 ## Challenges and How I Overcame Them
-**1. Port Conflicts and Configuration**
+### 1. Port Conflicts and Configuration**
 
-Challenge: Flask and the Live Server sometimes conflicted on ports, and the backend wasn’t accessible.
-Solution: Carefully configured Flask to run on localhost:5000 and ensured Live Server used localhost:5500 for the frontend.
+**Challenge:** Flask and the Live Server sometimes conflicted on ports, and the backend wasn’t accessible.
 
-**2. API Key Management**
+**Solution:** Carefully configured Flask to run on localhost:5000 and ensured Live Server used localhost:5500 for the frontend.
 
-Challenge: Accidentally hardcoded the OpenWeatherMap API key into JavaScript, wich posed a security risk.
-Solution: Moved the API key to a .env file and accessed it securely via the Flask backend.
+### 2. API Key Management**
 
-**3. Learning AWS S3 Integration**
+**Challenge:** Accidentally hardcoded the OpenWeatherMap API key into JavaScript, wich posed a security risk.
 
-Challenge: Initial confusion with setting up S3 buckets and managing AWS credentials.
-Solution: Used boto3 to automate bucket creation and object storage, and securely stored credentials in the .env file.
+**Solution:** Moved the API key to a .env file and accessed it securely via the Flask backend.
 
-**4. Debugging Deployment Issues**
+### 3. Learning AWS S3 Integration**
 
-Challenge: Encountered errors when running the app in production with Waitress and Gunicorn.
-Solution: Researched platform-specific deployment practices and tested configurations thoroughly on both Windows and Linux environments.
+**Challenge:** Initial confusion with setting up S3 buckets and managing AWS credentials.
 
-**5. Handling Dynamic Frontend Updates**
+**Solution:** Used boto3 to automate bucket creation and object storage, and securely stored credentials in the .env file.
 
-Challenge: Struggled with dynamically updating the weather data display in the frontend.
-Solution: Utilized JavaScript’s DOM manipulation features and Axios for API calls, ensuring smooth UI updates.
+### 4. Debugging Deployment Issues**
+
+**Challenge:** Encountered errors when running the app in production with Waitress and Gunicorn.
+
+**Solution:** Researched platform-specific deployment practices and tested configurations thoroughly on both Windows and Linux environments.
+
+### 5. Handling Dynamic Frontend Updates**
+
+**Challenge:** Struggled with dynamically updating the weather data display in the frontend.
+
+**Solution:** Utilized JavaScript’s DOM manipulation features and Axios for API calls, ensuring smooth UI updates.
 
 
 ## Future Enhancements
 
-Add user authentication.
-Cache weather data to reduce API calls.
-Display a 7-day forecast using OpenWeatherMap's One Call API.
-Integrate with a database for persistent data storage
+- Add user authentication.
+- Cache weather data to reduce API calls.
+- Display a 7-day forecast using OpenWeatherMap's One Call API.
