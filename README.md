@@ -100,31 +100,31 @@ Using Gunicorn (for Linux/Mac):
 
 
 ## Challenges and How I Overcame Them
-### 1. Port Conflicts and Configuration**
+### 1. Port Conflicts and Configuration
 
 **Challenge:** Flask and the Live Server sometimes conflicted on ports, and the backend wasn’t accessible.
 
 **Solution:** Carefully configured Flask to run on localhost:5000 and ensured Live Server used localhost:5500 for the frontend.
 
-### 2. API Key Management**
+### 2. API Key Management
 
 **Challenge:** Accidentally hardcoded the OpenWeatherMap API key into JavaScript, wich posed a security risk.
 
 **Solution:** Moved the API key to a .env file and accessed it securely via the Flask backend.
 
-### 3. Learning AWS S3 Integration**
+### 3. Learning AWS S3 Integration
 
 **Challenge:** Initial confusion with setting up S3 buckets and managing AWS credentials.
 
 **Solution:** Used boto3 to automate bucket creation and object storage, and securely stored credentials in the .env file.
 
-### 4. Debugging Deployment Issues**
+### 4. Debugging Deployment Issues
 
 **Challenge:** Encountered errors when running the app in production with Waitress and Gunicorn.
 
 **Solution:** Researched platform-specific deployment practices and tested configurations thoroughly on both Windows and Linux environments.
 
-### 5. Handling Dynamic Frontend Updates**
+### 5. Handling Dynamic Frontend Updates
 
 **Challenge:** Struggled with dynamically updating the weather data display in the frontend.
 
